@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Temperatura</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #172033;
+    }
+
+    header {
+      background: linear-gradient(135deg, #c62828, #e53935);
+      color: white;
+      padding: 25px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.15);
+    }
+
+    header .topo {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      opacity: .9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 25px auto;
+      padding: 0 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .card h3 {
+      font-size: 14px;
+      color: #687386;
+      margin-bottom: 10px;
+    }
+
+    .numero {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .verde {
+      color: #198754;
+    }
+
+    .vermelho {
+      color: #dc3545;
+    }
+
+    .laranja {
+      color: #fd7e14;
+    }
+
+    .filtros {
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input, select, button {
+      border: 1px solid #d6dbe1;
+      border-radius: 8px;
+      padding: 11px 13px;
+      font-size: 14px;
+    }
+
+    input, select {
+      background: white;
+    }
+
+    button {
+      background: #c62828;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #a91f1f;
+    }
+
+    .tabela-container {
+      background: white;
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 850px;
+    }
+
+    th {
+      background: #172033;
+      color: white;
+      padding: 14px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    td {
+      padding: 13px;
+      border-bottom: 1px solid #edf0f3;
+      font-size: 14px;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status.ok {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .status.atencao {
+      background: #fff3cd;
+      color: #664d03;
+    }
+
+    .status.critico {
+      background: #f8d7da;
+      color: #842029;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .rodape {
+      text-align: center;
+      color: #687386;
+      padding: 30px 10px;
+      font-size: 13px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal.aberto {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .modal-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .campo {
+      margin-bottom: 15px;
+    }
+
+    .campo label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .campo input,
+    .campo select {
+      width: 100%;
+    }
+
+    .acoes {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-secundario {
+      background: #6c757d;
+    }
+
+    @media (max-width: 800px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .filtros {
+        flex-direction: column;
+      }
+
+      input, select, button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+    <h1>🌡️ Controle de Temperatura</h1>
+    <p>Painel de monitoramento e checklist</p>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="cards">
+
+    <div class="card">
+      <h3>Total de registros</h3>
+      <div class="numero" id="total">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Temperaturas normais</h3>
+      <div class="numero verde" id="normais">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Atenção</h3>
+      <div class="numero laranja" id="atencao">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Críticos</h3>
+      <div class="numero vermelho" id="criticos">0</div>
+    </div>
+
+  </section>
+
+  <section class="filtros">
+
+    <input
+      type="text"
+      id="busca"
+      placeholder="🔎 Buscar equipamento..."
+      oninput="renderizar()"
+    >
+
+    <select id="filtroStatus" onchange="renderizar()">
+      <option value="todos">Todos os status</option>
+      <option value="normal">Normal</option>
+      <option value="atencao">Atenção</option>
+      <option value="critico">Crítico</option>
+    </select>
+
+    <input
+      type="date"
+      id="filtroData"
+      onchange="renderizar()"
+    >
+
+    <button onclick="abrirModal()">
+      + Nova medição
+    </button>
+
+  </section>
+
+  <section class="tabela-container">
+
+    <table>
+      <thead>
+        <tr>
+          <th>✓</th>
+          <th>Data</th>
+          <th>Horário</th>
+          <th>Equipamento / Local</th>
+          <th>Temperatura</th>
+          <th>Limite</th>
+          <th>Status</th>
+          <th>Responsável</th>
+        </tr>
+      </thead>
+
+      <tbody id="tabela"></tbody>
+
+    </table>
+
+  </section>
+
+  <div class="rodape">
+    Sistema de controle de temperatura • Atualizado automaticamente
+  </div>
+
+</main>
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <h2>Nova medição</h2>
+
+    <div class="campo">
+      <label>Equipamento / Local</label>
+      <input id="novoLocal" placeholder="Ex.: Geladeira 01">
+    </div>
+
+    <div class="campo">
+      <label>Temperatura (°C)</label>
+      <input id="novaTemperatura" type="number" step="0.1" placeholder="Ex.: 4.5">
+    </div>
+
+    <div class="campo">
+      <label>Temperatura mínima (°C)</label>
+      <input id="minima" type="number" step="0.1" value="2">
+    </div>
+
+    <div class="campo">
+      <label>Temperatura máxima (°C)</label>
+      <input id="maxima" type="number" step="0.1" value="8">
+    </div>
+
+    <div class="campo">
+      <label>Responsável</label>
+      <input id="responsavel" placeholder="Nome do responsável">
+    </div>
+
+    <div class="acoes">
+      <button
+        class="btn-secundario"
+        onclick="fecharModal()">
+        Cancelar
+      </button>
+
+      <button onclick="adicionarMedicao()">
+        Salvar
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+  /*
+   * ==========================================================
+   * DADOS
+   * ==========================================================
+   *
+   * SUBSTITUA ESTES EXEMPLOS PELOS DADOS DO SEU PDF.
+   */
+
+  let registros = [
+    {
+      data: "2026-07-11",
+      hora: "08:00",
+      local: "Geladeira 01",
+      temperatura: 4.5,
+      minima: 2,
+      maxima: 8,
+      responsavel: "Responsável"
+    },
+    {
+      data: "2026-07-11",
+      hora: "08:10",
+      local: "Geladeira 02",
+      temperatura: 5.2,
+      minima: 2,
+      maxima: 8,
+      responsavel: "Responsável"
+    },
+    {
+      data: "2026-07-11",
+      hora: "08:20",
+      local: "Freezer 01",
+      temperatura: -18,
+      minima: -25,
+      maxima: -15,
+      responsavel: "Responsável"
+    }
+  ];
+
+
+  /*
+   * ==========================================================
+   * STATUS DA TEMPERATURA
+   * ==========================================================
+   */
+
+  function calcularStatus(registro) {
+
+    const temperatura = Number(registro.temperatura);
+    const minima = Number(registro.minima);
+    const maxima = Number(registro.maxima);
+
+    if (temperatura < minima || temperatura > maxima) {
+      return "critico";
+    }
+
+    const margem = (maxima - minima) * 0.15;
+
+    if (
+      temperatura <= minima + margem ||
+      temperatura >= maxima - margem
+    ) {
+      return "atencao";
+    }
+
+    return "normal";
+  }
+
+
+  /*
+   * ==========================================================
+   * TEXTO DO STATUS
+   * ==========================================================
+   */
+
+  function textoStatus(status) {
+
+    if (status === "normal") return "NORMAL";
+
+    if (status === "atencao") return "ATENÇÃO";
+
+    return "CRÍTICO";
+  }
+
+
+  /*
+   * ==========================================================
+   * FORMATA DATA
+   * ==========================================================
+   */
+
+  function formatarData(data) {
+
+    if (!data) return "";
+
+    const partes = data.split("-");
+
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+  }
+
+
+  /*
+   * ==========================================================
+   * RENDERIZAR TABELA
+   * ==========================================================
+   */
+
+  function renderizar() {
+
+    const tabela = document.getElementById("tabela");
+
+    const busca =
+      document
+        .getElementById("busca")
+        .value
+        .toLowerCase();
+
+    const filtroStatus =
+      document.getElementById("filtroStatus").value;
+
+    const filtroData =
+      document.getElementById("filtroData").value;
+
+    tabela.innerHTML = "";
+
+    let filtrados = registros.filter(registro => {
+
+      const status = calcularStatus(registro);
+
+      const correspondeBusca =
+        registro.local
+          .toLowerCase()
+          .includes(busca);
+
+      const correspondeStatus =
+        filtroStatus === "todos" ||
+        status === filtroStatus;
+
+      const correspondeData =
+        !filtroData ||
+        registro.data === filtroData;
+
+      return (
+        correspondeBusca &&
+        correspondeStatus &&
+        correspondeData
+      );
+
+    });
+
+
+    filtrados.forEach((registro, index) => {
+
+      const status = calcularStatus(registro);
+
+      const linha = document.createElement("tr");
+
+      linha.innerHTML = `
+
+        <td>
+          <input
+            type="checkbox"
+            class="check"
+            onchange="salvarChecklist(${index})"
+          >
+        </td>
+
+        <td>
+          ${formatarData(registro.data)}
+        </td>
+
+        <td>
+          ${registro.hora}
+        </td>
+
+        <td>
+          <strong>${registro.local}</strong>
+        </td>
+
+        <td>
+          <strong>${registro.temperatura} °C</strong>
+        </td>
+
+        <td>
+          ${registro.minima} °C
+          até
+          ${registro.maxima} °C
+        </td>
+
+        <td>
+          <span class="status ${status}">
+            ${textoStatus(status)}
+          </span>
+        </td>
+
+        <td>
+          ${registro.responsavel}
+        </td>
+
+      `;
+
+      tabela.appendChild(linha);
+
+    });
+
+
+    atualizarResumo();
+
+  }
+
+
+  /*
+   * ==========================================================
+   * RESUMO
+   * ==========================================================
+   */
+
+  function atualizarResumo() {
+
+    let normais = 0;
+    let atencao = 0;
+    let criticos = 0;
+
+    registros.forEach(registro => {
+
+      const status = calcularStatus(registro);
+
+      if (status === "normal") normais++;
+
+      if (status === "atencao") atencao++;
+
+      if (status === "critico") criticos++;
+
+    });
+
+
+    document.getElementById("total").textContent =
+      registros.length;
+
+    document.getElementById("normais").textContent =
+      normais;
+
+    document.getElementById("atencao").textContent =
+      atencao;
+
+    document.getElementById("criticos").textContent =
+      criticos;
+
+  }
+
+
+  /*
+   * ==========================================================
+   * MODAL
+   * ==========================================================
+   */
+
+  function abrirModal() {
+
+    document
+      .getElementById("modal")
+      .classList
+      .add("aberto");
+
+  }
+
+
+  function fecharModal() {
+
+    document
+      .getElementById("modal")
+      .classList
+      .remove("aberto");
+
+  }
+
+
+  /*
+   * ==========================================================
+   * ADICIONAR MEDIÇÃO
+   * ==========================================================
+   */
+
+  function adicionarMedicao() {
+
+    const local =
+      document.getElementById("novoLocal").value;
+
+    const temperatura =
+      Number(
+        document.getElementById("novaTemperatura").value
+      );
+
+    const minima =
+      Number(
+        document.getElementById("minima").value
+      );
+
+    const maxima =
+      Number(
+        document.getElementById("maxima").value
+      );
+
+    const responsavel =
+      document.getElementById("responsavel").value;
+
+
+    if (!local || isNaN(temperatura)) {
+
+      alert("Preencha o local e a temperatura.");
+
+      return;
+
+    }
+
+
+    const agora = new Date();
+
+
+    const data =
+      agora.toISOString().split("T")[0];
+
+    const hora =
+      agora.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+
+    registros.push({
+
+      data: data,
+
+      hora: hora,
+
+      local: local,
+
+      temperatura: temperatura,
+
+      minima: minima,
+
+      maxima: maxima,
+
+      responsavel:
+        responsavel || "Não informado"
+
+    });
+
+
+    fecharModal();
+
+    limparFormulario();
+
+    renderizar();
+
+  }
+
+
+  /*
+   * ==========================================================
+   * LIMPAR FORMULÁRIO
+   * ==========================================================
+   */
+
+  function limparFormulario() {
+
+    document.getElementById("novoLocal").value = "";
+
+    document.getElementById("novaTemperatura").value = "";
+
+    document.getElementById("responsavel").value = "";
+
+  }
+
+
+  /*
+   * ==========================================================
+   * CHECKLIST
+   * ==========================================================
+   */
+
+  function salvarChecklist(index) {
+
+    const chave =
+      "temperatura_check_" + index;
+
+    const atual =
+      localStorage.getItem(chave);
+
+    localStorage.setItem(
+      chave,
+      atual === "true" ? "false" : "true"
+    );
+
+  }
+
+
+  /*
+   * ==========================================================
+   * INICIAR
+   * ==========================================================
+   */
+
+  renderizar();
+
+</script>
+
+</body>
+</html>
