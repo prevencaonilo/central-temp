@@ -1,0 +1,26 @@
+﻿Setores,Tarefa,Prioridade,Status,Notas
+Câmara Fria Rotisseria,"Aferir temperatura (0°C a 4°C), validade secundária de insumos e limpeza dos estrados",Alta,Pendente,"Registrar temperatura no termômetro. Garantir que molhos, caldos e carnes prontas estejam com etiqueta de data/lote."
+Câmara Fria Padaria,"Verificar temperatura (0°C a 4°C) e etiquetagem de recheios, massas e margarinas",Alta,Pendente,Conferir PVPS das matérias-primas e garantir que nenhum saco/balde aberto fique sem vedação e identificação.
+Câmara Fria Fatiados,"Aferir temperatura (0°C a 4°C), etiquetagem de peças abertas e regra PVPS",Alta,Pendente,"Peças de frios/queijos fracionadas devem ter data de abertura, validade e estar protegidas por filme plástico."
+Câmara Fria dos Peixes,Checar temperatura (-18°C congelados / 0°C a 2°C resfriados) e acúmulo de gelo/água,Alta,Pendente,Inspecionar queima por frio nas embalagens e verificar se o dreno da câmara está desobstruído.
+Câmara Fria Congelados Geral,"Verificar temperatura (-18°C ou mais frio), ventilação dos evaporadores e organização",Alta,Pendente,Nenhum produto em contato direto com o chão. Respeitar o espaço entre caixas para circulação do ar frio.
+Câmara Fria Lácteos,"Checar temperatura (0°C a 4°C), validade dos iogurtes/queijos e embalagens avariadas",Alta,Pendente,Aplicar estritamente o PVPS. Separar itens com embalagem amassada/estufada para baixa imediata.
+Câmara Fria FLV,"Verificar temperatura (3°C a 8°C), triagem de itens estragados e umidade excessiva",Alta,Pendente,Retirar frutas e verduras com bolor ou podridão para não contaminar o restante do lote.
+Câmara Fria Polpas e Açaí,Checar temperatura congelada (-18°C) e integridade dos sacos de polpa,Média,Pendente,Verificar se há vazamento de polpa rasgada ou caixas rasgadas por peso excessivo.
+Freezer Arte Trigo Depósito,Aferir congelamento (-18°C) de pães congelados e data de validade das caixas,Alta,Pendente,Garantir que as caixas não fiquem abertas e que a massa não passe do tempo limite de congelamento.
+Câmara Fria Cerveja,"Checar temperatura (0°C a 4°C), organização por marca e integridade de fardos",Baixa,Pendente,Inspecionar latas/garrafas amassadas ou vazando e conferir PVPS das validades.
+Câmara Fria Refrigerantes,"Aferir temperatura de resfriamento, rotação de estoque e limpeza de paletes",Baixa,Pendente,Garantir abastecimento prioritário das bebidas com vencimento mais próximo.
+Açougue - Desossa e Produção,"Auditar rendimento da desossa, tara da balança e pesagem de osso/sebo",Alta,Pendente,Conferir se o descarte de osso/sebo está sendo pesado e baixado no sistema. Testar tara do filme/bandeja.
+Friamaria - Fatiamento,"Verificar higienização de peças, tara das bandejas e validade do autoatendimento",Alta,Pendente,Descontar peso do isopor/bandeja na balança. Retirar do balcão itens com vencimento no dia.
+Padaria e Confeitaria,"Auditar cumprimento das fichas técnicas, perdas por forno e reaproveitamento de pão",Alta,Pendente,Pães queimados devem ser lançados em perda. Transferência de pão amanhecido para torrada deve ser registrada.
+Rotisseria e Cozinha,"Medir temperatura do balcão quente (mín. 60°C), nota de transferência e descarte de sobras",Alta,Pendente,Toda carne/legume vindo de outros setores deve ter nota interna. Comida pronta vencida deve ser pesada e baixada.
+FLV Processado,"Checar qualidade na triagem de corte, validade de saladas/potes e pesagem dos sacos",Alta,Pendente,Garantir que frutas picadas fiquem sob refrigeração contínua e com etiquetagem completa.
+Corredor 1 Lado A,"Conferir precificação, alinhamento de gôndolas e checagem de validade (frente de gôndola)",Média,Pendente,Organizar produtos colocando os com vencimento próximo na frente. Retirar itens avariados.
+Corredor 1 Lado B,"Conferir precificação, limpeza das prateleiras e integridade de embalagens",Média,Pendente,Verificar se há pacotes rasgados ou furados no corredor.
+Corredor 2 Lado A,"Vistoriar datas de vencimento, sinalização de ofertas e etiquetas de preço",Média,Pendente,Checar se o código de barras da prateleira confere exatamente com o produto exposto.
+Corredor 2 Lado B,Auditagem de presença de produto sem preço e identificação de quebras escondidas,Média,Pendente,Procurar produtos danificados escondidos atrás das pilhas.
+Expositor Iogurte 1 Lado A,"Aferir temperatura do expositor (0°C a 5°C), validade dos iogurtes e limpeza do balcão",Alta,Pendente,Verificar se o ar frio do expositor está fluindo. Puxar para a frente itens perto do vencimento.
+Expositor Iogurte 1 Lado B,Conferir empilhamento máximo (linha de carga) e retirar embalagens amassadas/vazando,Alta,Pendente,Produtos acima da linha de carga perdem refrigeração e azedam rápido.
+Expositor Iogurte 2 Lado A,"Aferir temperatura, rotatividade de estoque (PVPS) e precificação das sobremesas lácteas",Alta,Pendente,Garantir que a etiqueta de preço esteja correta no leitor óptico do cliente.
+Ilhas de Congelados da Produção,"Checar linha de carga máxima, temperatura (-18°C) e degradação de gelo nas embalagens",Alta,Pendente,Retirar sacos congelados bloqueados por acúmulo de gelo ou com rasgos.
+Gestão de Descarte e Lixeiras,Inspecionar lixeiras da produção e auditar relatórios de baixa no sistema ERP,Alta,Pendente,Garantir que nenhuma mercadoria boa seja descartada no lixo e que a quebra física bata com o sistema.
